@@ -71,7 +71,7 @@ Antes de começar, certifique-se de ter os seguintes pré-requisitos instalados:
 - O Visual Studio irá compilar o projeto e iniciar o servidor **IIS Express**. Ele abrirá uma nova janela do navegador apontando para a URL do seu aplicativo (geralmente algo como `http://localhost:5000` ou `https://localhost:5001`).
 - **Nota**: Caso seja necessário, o IIS Express será configurado automaticamente pelo Visual Studio. Se for o primeiro vez que você está rodando o projeto, o Visual Studio pode demorar alguns minutos para configurar e compilar tudo corretamente.
 
-# Documentação
+## Documentação
 
 <ol>
 <li><a href="docs/01-Documentação de Contexto.md"> Documentação de Contexto</a></li>
