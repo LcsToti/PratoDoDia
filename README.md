@@ -1,8 +1,19 @@
-# Prato Do Dia
+# 🍽️ Prato Do Dia
 
 <img src="https://github.com/user-attachments/assets/3ca57226-4557-4f47-90db-7febd548b84e">
 
 O projeto **PratodoDia** é um sistema interativo de receitas desenvolvido para ajudar os usuários a descobrir e compartilhar receitas culinárias com base nos ingredientes que têm em casa. A plataforma é projetada para ser colaborativa e prática, permitindo que qualquer pessoa encontre inspiração para suas refeições diárias, mesmo com restrições alimentares ou preferências específicas. Além de sugerir receitas, o PratodoDia oferece funcionalidades como gestão de ingredientes, cadastro, salvamento e compartilhamento de receitas. O objetivo é criar uma experiência intuitiva e acessível para todos, desde cozinheiros iniciantes até chefs experientes.
+
+📋 [Tutorial de Configuração do Projeto Para Uso Local](https://github.com/LcsToti/PratoDoDia/?tab=readme-ov-file#tutorial-de-configura%C3%A7%C3%A3o-do-projeto-aspnet-core-com-mysql)
+
+## 🖼️ Galeria
+
+![Captura de tela 2025-02-27 074103](https://github.com/user-attachments/assets/a62775a9-fd28-4dd5-b2d0-1819d25a25cc)
+![Captura de tela 2025-02-27 074122](https://github.com/user-attachments/assets/4fbcffda-5629-4818-8710-3e45ef1d8f0c)
+![Captura de tela 2025-02-27 074136](https://github.com/user-attachments/assets/cb946e63-59c6-41b8-aebe-63888637249d)
+![Captura de tela 2025-02-27 074200](https://github.com/user-attachments/assets/bb3b2fda-5976-4bbc-bbdd-0911ead50463)
+![Captura de tela 2025-02-27 074211](https://github.com/user-attachments/assets/18fb0edf-b8df-4738-9abf-5ec084256612)
+
 
 ## Tutorial de Configuração do Projeto ASP.NET Core com MySQL
 
