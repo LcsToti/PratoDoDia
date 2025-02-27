@@ -73,7 +73,3 @@ Antes de começar, certifique-se de ter os seguintes pré-requisitos instalados:
 <li><a href="docs/12-Apresentação do Projeto.md"> Apresentação do Projeto</a></li>
 <li><a href="docs/13-Referências.md"> Referências</a></li>
 </ol>
-
-# Código
-
-<li><a href="src/README.md"> Código Fonte</a></li>
