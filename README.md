@@ -8,7 +8,7 @@
 
 O projeto **PratodoDia** é um sistema interativo de receitas desenvolvido para ajudar os usuários a descobrir e compartilhar receitas culinárias com base nos ingredientes que têm em casa. A plataforma é projetada para ser colaborativa e prática, permitindo que qualquer pessoa encontre inspiração para suas refeições diárias, mesmo com restrições alimentares ou preferências específicas. Além de sugerir receitas, o PratodoDia oferece funcionalidades como gestão de ingredientes, cadastro, salvamento e compartilhamento de receitas. O objetivo é criar uma experiência intuitiva e acessível para todos, desde cozinheiros iniciantes até chefs experientes.
 
-[Acesse AQUI!](https://opratododia-gab8b5gcccbpg3ga.canadacentral-01.azurewebsites.net/)
+[Acesse AQUI!](https://opratododia.azurewebsites.net/)
 
 📋 [Tutorial de Configuração do Projeto Para Uso Local](https://github.com/LcsToti/PratoDoDia/?tab=readme-ov-file#tutorial-de-configura%C3%A7%C3%A3o-do-projeto-aspnet-core-com-mysql)
 
