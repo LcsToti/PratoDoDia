@@ -19,7 +19,7 @@ namespace pratododia_project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] string? categoria, [FromQuery] string? nomeReceita, bool? status)
+        public async Task<IActionResult> Index([FromQuery] string categoria, [FromQuery] string nomeReceita)
         {
             var receitas = context.Receitas.AsQueryable();
             var userId = User.Identity.IsAuthenticated ? int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) : (int?)null;
@@ -32,7 +32,7 @@ namespace pratododia_project.Controllers
                     .Select(ui => ui.IdIngrediente)
                     .ToList();
 
-                if (ingredientesOcultosIds.Any())
+                if (ingredientesOcultosIds.Count != 0)
                 {
                     receitas = receitas.Where(r => !r.IngredientesReceitas
                         .Any(ir => ingredientesOcultosIds.Contains(ir.IdIngrediente)));
@@ -58,7 +58,7 @@ namespace pratododia_project.Controllers
             var listaReceitas = await receitas.ToListAsync();
 
             // Verifica se é uma requisição AJAX
-            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            if (Request.Headers.XRequestedWith == "XMLHttpRequest")
             {
                 return PartialView("_RecipesMenu", listaReceitas);
             }
@@ -83,7 +83,7 @@ namespace pratododia_project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromBody] IngredientesRequest request, bool? status)
+        public IActionResult Index([FromBody] IngredientesRequest request)
         {
             var receitas = context.Receitas.AsQueryable();
             var userId = User.Identity.IsAuthenticated ? int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)) : (int?)null;
@@ -95,7 +95,7 @@ namespace pratododia_project.Controllers
                     .Select(ui => ui.IdIngrediente)
                     .ToList();
 
-                if (ingredientesOcultosIds.Any())
+                if (ingredientesOcultosIds.Count != 0)
                 {
                     receitas = receitas.Where(r => !r.IngredientesReceitas
                         .Any(ir => ingredientesOcultosIds.Contains(ir.IdIngrediente)));
@@ -118,7 +118,7 @@ namespace pratododia_project.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Ingrediente ingrediente)
         {
-            if (Request.Form["RestricoesSelecionadas"].Any())
+            if (Request.Form["RestricoesSelecionadas"].Count != 0)
             {
                 foreach (var restricao in Request.Form["RestricoesSelecionadas"])
                 {
@@ -128,7 +128,7 @@ namespace pratododia_project.Controllers
             context.Add(ingrediente);
             await context.SaveChangesAsync();
 
-            var referer = Request.Headers["Referer"].ToString();
+            var referer = Request.Headers.Referer.ToString();
             if (!string.IsNullOrEmpty(referer))
             {
                 return Redirect(referer);
