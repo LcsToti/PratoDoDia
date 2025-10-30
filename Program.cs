@@ -3,22 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using pratododia_project.Models;
 using DotNetEnv;
 
-var builder = WebApplication.CreateBuilder(args);
-
 // .env
 Env.Load();
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-var server = Environment.GetEnvironmentVariable("DB_SERVER");
-var port = Environment.GetEnvironmentVariable("DB_PORT");
-var database = Environment.GetEnvironmentVariable("DB_DATABASE");
-var user = Environment.GetEnvironmentVariable("DB_USER");
-var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
-var sslmode = Environment.GetEnvironmentVariable("DB_SSLMODE");
+var server = builder.Configuration["Db:Server"];
+var port = builder.Configuration["Db:Port"];
+var database = builder.Configuration["Db:Database"];
+var user = builder.Configuration["Db:User"];
+var password = builder.Configuration["Db:Password"];
+var sslmode = builder.Configuration["Db:SslMode"];
 
 if (string.IsNullOrWhiteSpace(server) ||
     string.IsNullOrWhiteSpace(port) ||
@@ -26,7 +26,17 @@ if (string.IsNullOrWhiteSpace(server) ||
     string.IsNullOrWhiteSpace(user) ||
     string.IsNullOrWhiteSpace(password) ||
     string.IsNullOrWhiteSpace(sslmode))
-    throw new Exception("Variáveis de ambiente do banco de dados não foram configuradas corretamente!");
+{
+    throw new Exception(
+        $"Variáveis de ambiente do banco de dados não foram configuradas corretamente!\n" +
+        $"Server: {server}\n" +
+        $"Port: {port}\n" +
+        $"Database: {database}\n" +
+        $"User: {user}\n" +
+        $"Password: {password}\n" +
+        $"SslMode: {sslmode}"
+    );
+}
 
 var connectionString = $"Server={server};Port={port};Database={database};User={user};Password={password};SslMode={sslmode};";
 
