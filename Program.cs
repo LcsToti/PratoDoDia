@@ -6,7 +6,7 @@ using DotNetEnv;
 var builder = WebApplication.CreateBuilder(args);
 
 // .env
-DotNetEnv.Env.Load();
+Env.Load();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
