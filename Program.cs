@@ -1,17 +1,38 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using pratododia_project.Models;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// .env
+DotNetEnv.Env.Load();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-builder.Services.AddDbContext<AppDbContext>
-    (options => options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection")
-    , new MySqlServerVersion(new Version(8, 0, 40))));
+var server = Environment.GetEnvironmentVariable("DB_SERVER");
+var port = Environment.GetEnvironmentVariable("DB_PORT");
+var database = Environment.GetEnvironmentVariable("DB_DATABASE");
+var user = Environment.GetEnvironmentVariable("DB_USER");
+var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+var sslmode = Environment.GetEnvironmentVariable("DB_SSLMODE");
+
+if (string.IsNullOrWhiteSpace(server) ||
+    string.IsNullOrWhiteSpace(port) ||
+    string.IsNullOrWhiteSpace(database) ||
+    string.IsNullOrWhiteSpace(user) ||
+    string.IsNullOrWhiteSpace(password) ||
+    string.IsNullOrWhiteSpace(sslmode))
+    throw new Exception("Variáveis de ambiente do banco de dados não foram configuradas corretamente!");
+
+var connectionString = $"Server={server};Port={port};Database={database};User={user};Password={password};SslMode={sslmode};";
+
+builder.Services.AddDbContext<AppDbContext>(
+    options => options.UseMySql(connectionString, 
+    new MySqlServerVersion(new Version(8, 0, 40))));
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
