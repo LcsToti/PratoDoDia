@@ -1,0 +1,73 @@
+services:
+  pratododia-db:
+    image: mysql:8.0
+    container_name: pratododia-db
+    restart: unless-stopped
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${Db__Password}
+      MYSQL_DATABASE: ${Db__Database}
+    volumes:
+      - pratododia-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${Db__Password}"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+    networks:
+      - db-network
+
+  app:
+    build:
+      context: .
+      target: final
+    container_name: pratododia-app
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - npm-network
+      - db-network
+    expose:
+      - "8080"
+    environment:
+      Db__Server: ${Db__Server}
+      Db__Port: ${Db__Port}
+      Db__Database: ${Db__Database}
+      Db__User: ${Db__User}
+      Db__Password: ${Db__Password}
+      Db__SslMode: ${Db__SslMode}
+    depends_on:
+      migrator:
+        condition: service_completed_successfully # CORREÇÃO: Depende do Migrator
+
+  migrator:
+    build:
+      context: .
+      target: migrator
+    container_name: pratododia-migrator
+    env_file: .env
+    networks:
+      - db-network
+    environment:
+      Db__Server: ${Db__Server}
+      Db__Port: ${Db__Port}
+      Db__Database: ${Db__Database}
+      Db__User: ${Db__User}
+      Db__Password: ${Db__Password}
+      Db__SslMode: ${Db__SslMode}
+    command: >
+      /bin/sh -c "sleep 10 && dotnet ef database update" # CORREÇÃO: Comando que espera 10s
+    depends_on:
+      pratododia-db:
+        condition: service_healthy # CORREÇÃO: Espera o Banco ficar Healthy
+
+networks:
+  npm-network:
+    external: true
+    name: npm-data_default
+  db-network:
+    driver: bridge
+
+volumes:
+  pratododia-data:

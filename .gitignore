@@ -8,3 +8,4 @@
 **/obj
 /.env
 **/publish
+dotnet-install.sh
