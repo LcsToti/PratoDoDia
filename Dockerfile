@@ -19,5 +19,5 @@ ENTRYPOINT ["dotnet", "pratododia-project.dll"]
 # STAGE 3 — Migrator (Reaproveita o BUILD e adiciona ferramentas)
 FROM build AS migrator
 WORKDIR /src
-RUN dotnet tool install --global dotnet-ef
+RUN dotnet tool install --global dotnet-ef --version 8.0.3
 ENV PATH="$PATH:/root/.dotnet/tools"
