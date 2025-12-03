@@ -29,39 +29,45 @@ namespace pratododia_project.Controllers
         //CRUD
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdUsuario,NomeUsuario,Email,Senha,IsAdmin")] Usuario usuario)
+        public async Task<IActionResult> Create(Usuario usuario)
         {
-            if (ModelState.IsValid && !_context.Usuarios.Any(user => user.Email == usuario.Email))
-            {
-                usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
-                usuario.CaminhoImg = Path.Combine("img", "usuarioDefault.jpg");
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+                return View(usuario);
 
-                var claims = new List<Claim>
+            bool emailExiste = await _context.Usuarios.AnyAsync(u => u.Email == usuario.Email);
+            if (emailExiste)
+            {
+                ViewBag.Message = "Email já cadastrado!";
+                return View(usuario);
+            }
+
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
+            usuario.CaminhoImg = Path.Combine("img", "usuarioDefault.jpg");
+
+            _context.Usuarios.Add(usuario);
+            await _context.SaveChangesAsync();
+
+            var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, usuario.NomeUsuario),
                     new Claim(ClaimTypes.Email, usuario.Email),
                     new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString()),
-                    new Claim(ClaimTypes.Role, usuario.IsAdmin.ToString()),
-                };
-                var usuarioIdentity = new ClaimsIdentity(claims, "login");
-                ClaimsPrincipal principal = new ClaimsPrincipal(usuarioIdentity);
-
-                var props = new AuthenticationProperties
-                {
-                    AllowRefresh = true,
-                    ExpiresUtc = DateTime.UtcNow.ToLocalTime().AddHours(8),
-                    IsPersistent = true
+                    new Claim(ClaimTypes.Role, usuario.IsAdmin ? "Admin" : "User")
                 };
 
-                await HttpContext.SignInAsync(principal, props);
+            var identity = new ClaimsIdentity(claims, "login");
+            var principal = new ClaimsPrincipal(identity);
 
-                return RedirectToAction("Index", "Home");
-            }
-            ViewBag.Message = "Email já cadastrado!";
-            return View();
+            await HttpContext.SignInAsync(principal, new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                ExpiresUtc = DateTime.UtcNow.AddHours(8),
+                IsPersistent = true
+            });
+
+            return RedirectToAction("Index", "Home");
         }
+
 
         public async Task<IActionResult> Index()
         {
@@ -170,9 +176,9 @@ namespace pratododia_project.Controllers
                 usuario.CaminhoImg = Path.Combine("ImagensUsuarios", fileName);
             }
 
-                _context.Update(usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Profile");
+            _context.Update(usuario);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Profile");
         }
 
         public async Task<IActionResult> Delete(int? id)
