@@ -26,7 +26,7 @@ services:
     restart: unless-stopped
     env_file: .env
     networks:
-      - npm-network
+      - npm-data_default
       - db-network
     expose:
       - "8080"
@@ -63,9 +63,8 @@ services:
         condition: service_healthy # CORREÇÃO: Espera o Banco ficar Healthy
 
 networks:
-  npm-network:
+  npm-data_default:
     external: true
-    name: npm-data_default
   db-network:
     driver: bridge
 
