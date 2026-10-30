@@ -1,16 +1,16 @@
 # 🍽️ Prato Do Dia
 
-<img src="https://github.com/user-attachments/assets/3ca57226-4557-4f47-90db-7febd548b84e">
+<img src="https://github.com/user-attachments/assets/3ca57226-4557-4f47-90db-7febd548b84e" alt="Banner Prato do Dia">
 
 `Jul/24 - Dez/24`
 
-`ASP.NET Core MVC, MySQL, Azure, CSS, Bootstrap, HTML, JS`
+`ASP.NET Core MVC, .NET 8, MySQL, Azure, CSS, Bootstrap, HTML, JS`
 
-O projeto **PratodoDia** é um sistema interativo de receitas desenvolvido para ajudar os usuários a descobrir e compartilhar receitas culinárias com base nos ingredientes que têm em casa. A plataforma é projetada para ser colaborativa e prática, permitindo que qualquer pessoa encontre inspiração para suas refeições diárias, mesmo com restrições alimentares ou preferências específicas. Além de sugerir receitas, o PratodoDia oferece funcionalidades como gestão de ingredientes, cadastro, salvamento e compartilhamento de receitas. O objetivo é criar uma experiência intuitiva e acessível para todos, desde cozinheiros iniciantes até chefs experientes.
+O projeto **Prato do Dia** é um sistema interativo de receitas desenvolvido para ajudar os usuários a descobrir e compartilhar receitas culinárias com base nos ingredientes que têm em casa. A plataforma é projetada para ser colaborativa e prática, permitindo que qualquer pessoa encontre inspiração para suas refeições diárias, mesmo com restrições alimentares ou preferências específicas. Além de sugerir receitas, o Prato do Dia oferece funcionalidades como gestão de ingredientes, cadastro, salvamento e compartilhamento de receitas. O objetivo é criar uma experiência intuitiva e acessível para todos, desde cozinheiros iniciantes até chefs experientes.
 
-🔗 [Acesse AQUI!](https://pratododia.lucastoti.com/)
+🔗 **[Acesse a aplicação](https://pratododia.lucastoti.com/)**
 
-📋 [Tutorial de Configuração do Projeto Para Uso Local](https://github.com/LcsToti/PratoDoDia/?tab=readme-ov-file#tutorial-de-configura%C3%A7%C3%A3o-do-projeto-aspnet-core-com-mysql)
+📋 **[Tutorial de configuração para uso local](#como-executar-localmente)**
 
 ## 🖼️ Galeria
 
@@ -20,71 +20,106 @@ O projeto **PratodoDia** é um sistema interativo de receitas desenvolvido para 
 ![Captura de tela 2025-02-27 074200](https://github.com/user-attachments/assets/bb3b2fda-5976-4bbc-bbdd-0911ead50463)
 ![Captura de tela 2025-02-27 074211](https://github.com/user-attachments/assets/18fb0edf-b8df-4738-9abf-5ec084256612)
 
+## Como executar localmente
 
-## Tutorial de Configuração do Projeto ASP.NET Core com MySQL
+### Pré-requisitos
 
-### **Requisitos:**
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- **MySQL 8.0** em execução
+- **Git**
+- **EF Core CLI** (`dotnet-ef`) para aplicar as migrations
+- Opcional: **Visual Studio 2022** (versão 17.8 ou superior), com a carga de trabalho de desenvolvimento web e ASP.NET
 
-Antes de começar, certifique-se de ter os seguintes pré-requisitos instalados:
+### 1. Clonar o repositório
 
-1. **Microsoft Visual Studio** (2019 ou superior)
-    - [Download do Visual Studio](https://visualstudio.microsoft.com/pt-br/downloads/)
-    - Durante a instalação, selecione a carga de trabalho **"Desenvolvimento para .NET"**.
-2. **MySQL Server**
-    - [Download do MySQL Community Server](https://dev.mysql.com/downloads/installer/)
-    - Durante a instalação, crie um usuário com privilégios (por padrão, o usuário **root** é criado) e lembre-se da **senha** que será utilizada para configurar a conexão no aplicativo.
-    - Certifique-se de manter a porta **3306** padrão.
+```bash
+git clone https://github.com/LcsToti/PratoDoDia.git
+cd PratoDoDia
+```
 
----
+O arquivo `pratododia-project.sln` e o projeto `pratododia-project.csproj` estão na **raiz** do repositório.
 
-### **Passo a Passo para Configuração do Projeto:**
+### 2. Configurar o MySQL
 
-1. **Baixe o código-fonte do projeto:**
-    - Obtenha o código do projeto **pratododia** do repositório fornecido (GitHub, repositório interno, etc.).
-    - Após o download, você encontrará duas pastas: **docs** e **src**.
-        - A pasta **docs** contém a documentação.
-        - A pasta **src** contém o código-fonte. Dentro dela, você encontrará a pasta **pratododia-project**, que é onde está o arquivo de solução (`pratododia-projetct.sln`).
-2. **Abra o Projeto no Visual Studio:**
-    - No Visual Studio, vá até **Arquivo > Abrir > Projeto/Solução** e abra a solução `pratododia-project.sln` localizada dentro da pasta **src/pratododia-project**.
-3. **Configuração da Conexão com o Banco de Dados:**
-    - Abra o arquivo **`appsettings.json`** no Visual Studio.
-    - Localize a chave **`DefaultConnection`** na seção **ConnectionStrings** e edite-a com os dados do seu banco de dados, conforme abaixo:
-    
-    ```json
-    "ConnectionStrings": {
-      "DefaultConnection": "server=localhost;database=pratododia;user=root;password=SUA_SENHA_AQUI;port=3306;SslMode=none"
-    }
-    ```
-    
-    - **Substitua** `SUA_SENHA_AQUI` pela senha criada na instalação do MySQL.
-4. **Abrir o Console do Gerenciador de Pacotes NuGet no Visual Studio:**
-    - No Visual Studio, vá para **Ferramentas > Gerenciador de Pacotes do NuGet > Console do Gerenciador de Pacotes**.
-5. **Executar as Migrations:**
-    - No console do Gerenciador de Pacotes, digite o seguinte comando para aplicar as migrações ao banco de dados:
-    
-    ```bash
-    update-database
-    ```
-    
-    - Esse comando aplicará as migrações e criará as tabelas no banco de dados MySQL, conforme o modelo definido no projeto.
-6. **Rodar o Projeto com IIS Express:**
-- No Visual Studio, no menu superior, localize a **caixa de seleção** onde você pode escolher o ambiente de execução (geralmente está configurado para usar **IIS Express** por padrão).
-- Clique no botão **Iniciar** ou pressione **F5** no teclado.
-- O Visual Studio irá compilar o projeto e iniciar o servidor **IIS Express**. Ele abrirá uma nova janela do navegador apontando para a URL do seu aplicativo (geralmente algo como `http://localhost:5000` ou `https://localhost:5001`).
-- **Nota**: Caso seja necessário, o IIS Express será configurado automaticamente pelo Visual Studio. Se for o primeiro vez que você está rodando o projeto, o Visual Studio pode demorar alguns minutos para configurar e compilar tudo corretamente.
+Copie `.env.example` para `.env` na raiz do projeto.
 
-## Documentação
+**PowerShell (Windows):**
 
-<ol>
-<li><a href="docs/01-Documentação de Contexto.md"> Documentação de Contexto</a></li>
-<li><a href="docs/02-Especificação do Projeto.md"> Especificação do Projeto</a></li>
-<li><a href="docs/03-Metodologia.md"> Metodologia</a></li>
-<li><a href="docs/04-Projeto de Interface.md"> Projeto de Interface</a></li>
-<li><a href="docs/05-Arquitetura da Solução.md"> Arquitetura da Solução</a></li>
-<li><a href="docs/06-Template Padrão da Aplicação.md"> Template Padrão da Aplicação</a></li>
-<li><a href="docs/07-Programação de Funcionalidades.md"> Programação de Funcionalidades</a></li>
-<li><a href="docs/08-Plano de Testes de Software.md"> Plano de Testes de Software</a></li>
-<li><a href="docs/09-Registro de Testes de Software.md"> Registro de Testes de Software</a></li>
-<li><a href="docs/10-Plano de Testes de Usabilidade.md"> Plano de Testes de Usabilidade</a></li>
-<li><a href="docs/11-Registro de Testes de Usabilidade.md"> Registro de Testes de Usabilidade</a></li>
-</ol>
+```powershell
+Copy-Item .env.example .env
+```
+
+**Linux/macOS:**
+
+```bash
+cp .env.example .env
+```
+
+Edite o arquivo `.env` com os dados do seu MySQL local:
+
+```dotenv
+Db__Server=localhost
+Db__Port=3306
+Db__Database=pratododia
+Db__User=root
+Db__Password=SUA_SENHA
+Db__SslMode=none
+```
+
+> O aplicativo lê essas configurações por meio de variáveis `Db__*`, carregadas do arquivo `.env`. A chave `ConnectionStrings:DefaultConnection` **não é usada** nesta versão. O arquivo `.env` está no `.gitignore`; não publique senhas reais.
+
+### 3. Restaurar dependências e aplicar as migrations
+
+Na raiz do repositório:
+
+```bash
+dotnet restore
+dotnet tool install --global dotnet-ef --version 8.0.3
+dotnet ef database update
+```
+
+Caso `dotnet-ef` já esteja instalado, basta verificar se sua versão é compatível com o EF Core 8. Antes de aplicar as migrations, o MySQL deve estar em execução e as credenciais do `.env` precisam estar corretas.
+
+### 4. Executar a aplicação
+
+**Pelo terminal:**
+
+```bash
+dotnet run --launch-profile http
+```
+
+Acesse **http://localhost:5166**.
+
+Para usar o perfil HTTPS:
+
+```bash
+dotnet run --launch-profile https
+```
+
+Acesse **https://localhost:7094** (pode ser necessário confiar no certificado de desenvolvimento do .NET).
+
+**Pelo Visual Studio 2022:** abra `pratododia-project.sln`, escolha um perfil de execução (`http`, `https` ou `IIS Express`) e inicie a aplicação. Os endereços variam conforme o perfil; os acima correspondem aos perfis `http` e `https` em `Properties/launchSettings.json`.
+
+### Estrutura principal
+
+```text
+PratoDoDia/
+├── Controllers/                 # Controllers MVC
+├── Migrations/                  # Migrations do Entity Framework Core
+├── Models/                      # Modelos e contexto de dados
+├── Properties/                  # Configurações de execução
+├── ViewModels/                  # Modelos utilizados nas views
+├── Views/                       # Views Razor
+├── wwwroot/                     # Arquivos estáticos
+├── Program.cs                   # Inicialização e configuração da aplicação
+├── pratododia-project.csproj    # Projeto .NET 8
+├── pratododia-project.sln       # Solução do Visual Studio
+├── appsettings.json             # Configurações gerais da aplicação
+├── .env.example                 # Modelo de configuração do banco
+├── Dockerfile                   # Imagem Docker da aplicação
+└── docker-compose.yml           # Orquestração dos serviços
+```
+
+### Observação sobre Docker
+
+O repositório possui `Dockerfile` e `docker-compose.yml` com serviços para o aplicativo, o MySQL e a execução de migrations. O Compose atual depende da rede externa `npm-data_default`, usada na infraestrutura de implantação. Para executá-lo isoladamente em outra máquina, é necessário adaptar essa configuração de rede.
